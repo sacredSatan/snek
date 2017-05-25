@@ -9,6 +9,7 @@ Full disclosure, I had written a Snake clone with a shitty rival AI snake about 
 
 ### TODO List
 
+- Improve the UX by adding restart button, allowing users to resize the gameplay area, instructions etc. on the page
 - Optimize the code, follow the recommended conventions (of course)
-- Use HTML5 Canvas for the drawing of snake.
-- Add a Rival AI Snake.
+- Use HTML5 Canvas for the drawing of the game
+- Add a Rival AI Snake
