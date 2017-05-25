@@ -172,7 +172,6 @@ class Game extends React.Component {
     this.setState({
       snake: oldSnek,
     });
-    console.log(this.state.snek);
   }
 
   endGame() {
