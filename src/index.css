@@ -1,0 +1,61 @@
+html,
+body {
+	background: #00008B;
+	height: 100%;
+	width: 100%;
+	line-height: 0;
+	margin: 0;
+}
+
+#Game {
+	display: flex;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+}
+
+#Game > div {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#Surface {
+	display: block;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	background: #1A1AA5;
+	border: 2px solid rgba(229, 57, 143, .5);
+}
+
+.snek, .food {
+	position: absolute;
+	width: 25px;
+	height: 25px;
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	background-color: #e5398f;
+	z-index: 20;
+}
+
+.snek:nth-child(odd) {
+	background-color: rgba(229, 57, 143, .8);
+}
+
+.snek:first-child {
+	background-color: rgba(229, 57, 143, .5);
+}
+
+.food {
+	z-index: 19;
+	background-color: #ffd700;
+}
+
+.score {
+	color: #FFF;
+	line-height: 1;
+	font-size: 30px;
+	font-family: monospace;
+}
