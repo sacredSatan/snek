@@ -168,10 +168,18 @@ class Game extends React.Component {
     let snek = this.state.snek;
     let x = Math.floor(Math.random() * (this.props.size - 1)) + 1;
     let y = Math.floor(Math.random() * (this.props.size - 1)) + 1;
-    for(let i = 0; i<snek.length; i++) {
-      if(snek[i][0] === x && snek[i][1] === y)
-        this.generateFood();
-    }
+    let collision = false;
+    do {
+      collision = false;
+      for(let i = 0; i<snek.length; i++) {
+        if(snek[i][0] === x && snek[i][1] === y) {
+          x = Math.floor(Math.random() * (this.props.size - 1)) + 1;
+          y = Math.floor(Math.random() * (this.props.size - 1)) + 1;
+          collision = true;
+          continue;
+        }
+      }
+    } while(collision);
     this.setState({
       food: [x, y],
     });
