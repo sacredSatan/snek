@@ -41,11 +41,12 @@ class Game extends React.Component {
       ],
       direction: 'left',
       food: [10, 10],
+      keyEvent: false,
     }
   }
 
   componentDidMount() {
-    document.addEventListener('keypress', (e) => this.handleKeyPress(e));
+    document.addEventListener('keydown', (e) => this.handleKeyPress(e));
     setTimeout(
       () => {this.moveSnek(this.state.direction)},
       75
@@ -112,6 +113,7 @@ class Game extends React.Component {
     }
     this.setState({
       snek: oldSnek,
+      keyEvent: false,
     });
     setTimeout(
       () => {this.moveSnek(this.state.direction)},
@@ -122,7 +124,7 @@ class Game extends React.Component {
   handleKeyPress(e) {
     let keycode = e.keyCode;
     let direction = this.state.direction;
-    if(direction === '')
+    if(this.state.keyEvent || direction === '')
       return;
     switch(keycode) {
       case 37: //left
@@ -130,6 +132,7 @@ class Game extends React.Component {
           break;
         this.setState({
           direction: 'left',
+          keyEvent: true,
         });
         break;
       case 39: //right
@@ -137,6 +140,7 @@ class Game extends React.Component {
           break;
         this.setState({
           direction: 'right',
+          keyEvent: true,
         });
        break;
       case 38: //up
@@ -144,6 +148,7 @@ class Game extends React.Component {
           break;
         this.setState({
           direction: 'up',
+          keyEvent: true,
         });
         break;
       case 40: //down
@@ -151,6 +156,7 @@ class Game extends React.Component {
           break;
         this.setState({
           direction: 'down',
+          keyEvent: true,
         });
         break;
       default:
@@ -159,8 +165,13 @@ class Game extends React.Component {
   }
 
   generateFood() {
+    let snek = this.state.snek;
     let x = Math.floor(Math.random() * (this.props.size - 1)) + 1;
     let y = Math.floor(Math.random() * (this.props.size - 1)) + 1;
+    for(let i = 0; i<snek.length; i++) {
+      if(snek[i][0] === x && snek[i][1] === y)
+        this.generateFood();
+    }
     this.setState({
       food: [x, y],
     });
