@@ -4,9 +4,15 @@ import './index.css';
 
 function Score(props) {
   if(props.over)
-    return <div className='score'>Game Over! Final Score: {props.score}</div>;
+    return (
+      <div className='score gameOver'>
+        Game Over! Final Score: {props.score}
+        <span className='highScore'>highScore: {props.highScore}</span>
+        <button className="restartButton" onClick={props.handleRestart}>Restart</button>
+      </div>
+    );
   else
-    return <div className='score'>Score: {props.score}</div>;
+    return <div className='score'>Score: {props.score} <span className='highScore'>highScore: {props.highScore}</span></div>;
 }
 
 function Snek(props) {
@@ -42,12 +48,19 @@ class Game extends React.Component {
       direction: 'left',
       food: [10, 10],
       keyEvent: false,
+      highScore: 0,
     }
+    this.restartGame = this.restartGame.bind(this);
+    this.timeout = null;
   }
 
   componentDidMount() {
+    this.initLoop();
+  }
+
+  initLoop() {
     document.addEventListener('keydown', (e) => this.handleKeyPress(e));
-    setTimeout(
+    this.timeout = setTimeout(
       () => {this.moveSnek(this.state.direction)},
       75
     );
@@ -187,10 +200,18 @@ class Game extends React.Component {
 
   increaseSnek() {
     let oldSnek = this.state.snek;
+    let highScore = this.state.highScore;
     oldSnek.push(oldSnek[oldSnek.length - 1]);
-    this.setState({
-      snake: oldSnek,
-    });
+    if(highScore < oldSnek.length - 3) {
+      this.setState({
+        snake: oldSnek,
+        highScore: oldSnek.length - 3,
+      });      
+    } else {
+      this.setState({
+        snake: oldSnek,
+      });
+    }
   }
 
   endGame() {
@@ -199,12 +220,28 @@ class Game extends React.Component {
     });
   }
 
+  restartGame() {
+    this.setState({
+      snek: [
+        [5, 6],
+        [5, 7],
+        [5, 8],
+      ],
+      direction: 'left',
+      food: [10, 10],
+      keyEvent: false,
+    });
+    this.initLoop();
+  }
+
   render() {
     let snek = this.state.snek;
-    let over = false;
-    if(this.state.direction === '')
-      over = true;
-    return <div><Score score={snek.length - 3} over={over} /><Surface food={this.state.food} snek={snek} surface={this.props.size} /></div>;
+    if(this.state.direction === '') {
+      clearTimeout(this.timeout);
+      return <div><Score score={snek.length - 3} highScore={this.state.highScore} over={true} handleRestart={this.restartGame} /></div>;
+    }
+    return <div><Score score={snek.length - 3} highScore={this.state.highScore} over={false} /><Surface food={this.state.food} snek={snek} surface={this.props.size} /></div>;
+
   }
 }
 

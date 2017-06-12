@@ -59,3 +59,37 @@ body {
 	font-size: 30px;
 	font-family: monospace;
 }
+
+.highScore {
+	float: right;
+}
+
+.gameOver .highScore {
+	display: block;
+	text-align: center;
+	float: none;
+	margin: 10px 0;
+}
+
+.restartButton {
+    background-color: #e5398f;
+    color: #FFF;
+    padding: 10px 20px;
+    box-shadow: none;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    border-bottom: 3px solid #99265F;
+    margin-top: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 700;
+    font-size: 14px;
+    outline: 0;
+}
+
+.restartButton:active {
+    border-bottom: 0;
+    border-top: 3px solid transparent;
+}
